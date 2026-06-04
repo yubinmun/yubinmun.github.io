@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>학습보고서 2026.05.21</title>
+  <style>
+    :root {
+      --bg: #f6f8f7;
+      --paper: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --accent: #03c75a;
+      --accent-soft: rgba(3, 199, 90, 0.1);
+      --border: #e2e8f0;
+      --radius: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .report {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    .report-header {
+      padding: 2.5rem 2.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--accent-soft) 0%, transparent 100%);
+    }
+
+    .report-header .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .report-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .meta strong { color: var(--text); font-weight: 600; }
+
+    .report-body { padding: 2rem 2.5rem 2.5rem; }
+
+    section { margin-bottom: 2.25rem; }
+
+    section:last-child { margin-bottom: 0; }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 1.25rem 0 0.5rem;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 0.75rem; color: var(--text); }
+
+    ul, ol {
+      margin: 0.5rem 0 0.75rem 1.25rem;
+      color: var(--text);
+    }
+
+    li { margin-bottom: 0.35rem; }
+
+    li::marker { color: var(--accent); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 0.75rem 0 1rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.65rem 0.85rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    td code, p code, li code {
+      font-family: 'Consolas', 'Malgun Gothic', monospace;
+      font-size: 0.85em;
+      background: #f1f5f9;
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      color: #0f766e;
+    }
+
+    .checklist {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .checklist li {
+      padding: 0.5rem 0.75rem;
+      background: #f8fafc;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .report-footer {
+      padding: 1.25rem 2.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-align: center;
+      background: #fafbfc;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; max-width: none; }
+      .report { box-shadow: none; border: none; }
+    }
+
+    @media (max-width: 600px) {
+      .report-header, .report-body { padding: 1.5rem; }
+      .report-header h1 { font-size: 1.4rem; }
+      table { font-size: 0.8rem; }
+      th, td { padding: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <article class="report">
+      <header class="report-header">
+        <span class="tag">CURSOR 실습</span>
+        <h1>학습보고서</h1>
+        <div class="meta">
+          <span><strong>일자</strong> 2026년 5월 21일 ~ 26일</span>
+          <span><strong>작성</strong> 문유빈</span>
+          <span><strong>환경</strong> Windows 10 · Cursor IDE</span>
+          <span><strong>폴더</strong> Desktop\CURSOR_test, Desktop\제출물\0521</span>
+        </div>
+      </header>
+
+      <div class="report-body">
+        <section>
+          <h2>1. 오늘 한 일 요약</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>내용</th>
+                <th>결과물</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cursor 구조</td>
+                <td>Rule vs Skill 경로 정리, 중복 폴더 제거</td>
+                <td><code>.cursor/rules/test.mdc</code>, <code>.cursor/skills/</code></td>
+              </tr>
+              <tr>
+                <td>스킬 제작</td>
+                <td>wikicheck, copywriting, insta-cardnews-maker, cursor-folder-maker</td>
+                <td>각 <code>SKILL.md</code></td>
+              </tr>
+              <tr>
+                <td>위키 실습</td>
+                <td>Confluence MCP로 「컨텍스트 엔지니어링」 조회</td>
+                <td>표 형식 요약·비유 설명</td>
+              </tr>
+              <tr>
+                <td>카드뉴스</td>
+                <td>네이버 랩스 로보틱스 인스타 카드뉴스 웹 뷰어</td>
+                <td><code>cardnews_naver_labs.html</code></td>
+              </tr>
+              <tr>
+                <td>UI·인터랙션</td>
+                <td>네비·그라데이션·스와이프·관련 콘텐츠 섹션</td>
+                <td>고정 카드 + 스와이프 레이어, 하단 뉴스·차트</td>
+              </tr>
+              <tr>
+                <td>디자인 디벨롭</td>
+                <td>Figma DesignCode UI 참조 → 이미지 풀배경 + 검정 그라데이션 오버레이 + 하단 흰색 텍스트 레이어 구조</td>
+                <td>슬라이드 6장 (표지+5) 리디자인</td>
+              </tr>
+              <tr>
+                <td>Pexels MCP</td>
+                <td>Pexels API 연동 → 슬라이드별 무료 고화질 이미지 자동 검색·다운로드·적용</td>
+                <td><code>mcp.json</code> pexels 서버, <code>images/*.jpg</code></td>
+              </tr>
+              <tr>
+                <td>파일 정리</td>
+                <td>제출물 파일명 <code>[날짜][이름]영문제목</code> 규칙 통일</td>
+                <td><code>제출물/0521/</code> 5개 파일 리네임</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>2. Cursor 프로젝트 구조</h2>
+          <h3>올바른 폴더 구조</h3>
+          <ul>
+            <li><strong>Rule:</strong> <code>.cursor/rules/test.mdc</code> — <code>alwaysApply: true</code> 등 프로젝트 공통 플래그</li>
+            <li><strong>Skill:</strong> <code>.cursor/skills/스킬명/SKILL.md</code> — 특정 작업·키워드용 매뉴얼</li>
+            <li><strong>주의:</strong> <code>rules/rules/</code>, <code>rules/skills/</code> 중첩 경로는 사용하지 않음</li>
+          </ul>
+          <h3>작업 폴더 구분</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>경로</th>
+                <th>역할</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Desktop\CURSOR_test</code></td>
+                <td>Cursor 워크스페이스 · rules/skills · 실습 HTML</td>
+              </tr>
+              <tr>
+                <td><code>Desktop\CURSOR\YYYY-MM-DD_문유빈</code></td>
+                <td>날짜별 산출물 저장 (카드뉴스, 학습보고서 등)</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>3. 만든 스킬 정리</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>스킬</th>
+                <th>트리거·용도</th>
+                <th>핵심 규칙</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>wikicheck</td>
+                <td>「위키 확인」 포함 질문</td>
+                <td>Confluence MCP 조회, 표 답변, 마무리 인사</td>
+              </tr>
+              <tr>
+                <td>copywriting</td>
+                <td>마케팅 문구·카피 요청</td>
+                <td>AIDA, 30대 직장인, 문장 끝 이모지</td>
+              </tr>
+              <tr>
+                <td>insta-cardnews-maker</td>
+                <td>인스타 카드뉴스 제작</td>
+                <td>표지·5장·캡션·디자인 팁 4단 구성</td>
+              </tr>
+              <tr>
+                <td>cursor-folder-maker</td>
+                <td>CURSOR 폴더에 파일 저장</td>
+                <td>폴더명 <code>YYYY-MM-DD_문유빈</code> (MMDD 단축 금지)</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>4. 위키 실습 — 컨텍스트 엔지니어링</h2>
+          <ul>
+            <li><strong>조회:</strong> MCP <code>user-mcp-atlassian</code> → <code>confluence_search</code> → <code>confluence_get_page</code></li>
+            <li><strong>한 줄 정의:</strong> AI에게 넘기기 전 <strong>보여줄 정보 환경</strong>을 설계하는 일 — 필요한 정보는 context에, 불필요한 정보는 없게 유지</li>
+            <li><strong>비유:</strong> 프롬프트 엔지니어링 = 편지 문장 다듬기 / 컨텍스트 엔지니어링 = 회의실에 필요한 자료만 올려 두기</li>
+            <li><strong>관계:</strong> wiki 기준 <code>Harness ⊇ Context ⊇ Prompt</code> — 하네스(도구·루프) &gt; 컨텍스트 &gt; 프롬프트</li>
+            <li><strong>참고 wiki:</strong> 항상컨텍스트를 생각하며 개발하기, agentic design patterns 요약, Harness 엔지니어링</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>5. 카드뉴스 웹 (<code>cardnews_naver_labs.html</code>)</h2>
+          <h3>콘텐츠</h3>
+          <ul>
+            <li>주제: <strong>네이버 랩스 로보틱스</strong> — 2030 시민·일상 속 로봇 인프라 (AIDA형 카피)</li>
+            <li>구성: 표지 + 본문 5장 (비전·지수·효과·로드맵·약속)</li>
+          </ul>
+          <h3>디자인 진화 과정</h3>
+          <table>
+            <thead>
+              <tr><th>단계</th><th>내용</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>v1</td><td>화이트 카드 + SVG 일러스트 + 하단 텍스트, 글라스모피즘</td></tr>
+              <tr><td>v2 (Figma)</td><td>DesignCode UI 키트 참조 → Pretendard 폰트, LNB 좌측 네비, 타입 그리드 정리</td></tr>
+              <tr><td>v3 (이미지)</td><td>Pexels MCP로 실사 이미지 검색·다운로드 → SVG 교체</td></tr>
+              <tr><td>v4 (최종)</td><td><strong>풀 이미지 배경 + #000 그라데이션 오버레이(0%→80%) + 하단 흰색 텍스트</strong></td></tr>
+            </tbody>
+          </table>
+          <h3>최종 슬라이드 레이어 구조</h3>
+          <ul>
+            <li><strong>Layer 1:</strong> 이미지 — <code>.slide-bg > img.slide-photo</code> (absolute, object-fit: cover)</li>
+            <li><strong>Layer 2:</strong> 검정 그라데이션 — <code>.slide-overlay</code> (linear-gradient 상단 transparent → 하단 rgba(0,0,0,0.8))</li>
+            <li><strong>Layer 3:</strong> 상단 태그 — <code>.slide-head</code> (z-index 3, 흰색 반투명)</li>
+            <li><strong>Layer 4:</strong> 하단 텍스트 — <code>.slide-copy</code> (absolute bottom, 라벨+제목+본문 흰색)</li>
+          </ul>
+          <h3>인터랙션</h3>
+          <ul>
+            <li>좌측 <strong>LNB</strong>: 브랜드, 슬라이드 버튼, 공식 사이트 CTA</li>
+            <li>스와이프: 투명 <code>swipe-layer</code>로 터치·마우스·휠 감지, 하단 dots, 키보드 ←→</li>
+            <li>모바일(≤560px): LNB → 하단 탭바 전환</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>5-1. Pexels MCP 연동</h2>
+          <h3>설정</h3>
+          <ul>
+            <li><strong>서버:</strong> <code>pexels-mcp-server</code> (Python, PyPI)</li>
+            <li><strong>실행:</strong> <code>uvx pexels-mcp-server</code> (uvx로 자동 설치·실행)</li>
+            <li><strong>API 키:</strong> <a href="https://www.pexels.com/api/">pexels.com/api</a>에서 무료 발급</li>
+            <li><strong>mcp.json 위치:</strong> <code>~/.cursor/mcp.json</code> (글로벌)</li>
+          </ul>
+          <h3>활용 도구</h3>
+          <table>
+            <thead>
+              <tr><th>도구</th><th>용도</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>photos_search</code></td><td>키워드로 무료 고화질 사진 검색 (orientation, size, color 필터)</td></tr>
+              <tr><td><code>photo_get</code></td><td>특정 사진 ID로 상세 정보·URL 조회</td></tr>
+              <tr><td><code>videos_search</code></td><td>영상 검색 (향후 활용 가능)</td></tr>
+            </tbody>
+          </table>
+          <h3>워크플로</h3>
+          <ol>
+            <li>슬라이드 주제별 키워드로 <code>photos_search</code> 호출 (landscape, medium)</li>
+            <li>결과에서 적합한 사진 선택 → <code>src.landscape</code> URL 추출</li>
+            <li><code>Invoke-WebRequest</code>로 <code>images/</code> 폴더에 다운로드</li>
+            <li>HTML <code>&lt;img&gt;</code> 태그 src 경로 업데이트</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>6. 배운 점</h2>
+          <ol>
+            <li><strong>Rule</strong>은 “항상 켜 둘 것”, <strong>Skill</strong>은 “이런 요청일 때 읽을 매뉴얼”로 역할을 나눈다.</li>
+            <li>MCP wiki 조회는 도구 스키마 확인 후 <code>search</code> → <code>get_page</code> 순서가 안정적이다.</li>
+            <li>컨텍스트 엔지니어링은 프롬프트 한 줄보다 <strong>AI가 보는 전체 맥락</strong> 설계가 중요하다.</li>
+            <li>모바일 스와이프는 자식 요소(SVG 등)보다 <strong>전용 레이어</strong>에서 이벤트를 받는 것이 낫다.</li>
+            <li>터치·포인터 이벤트를 동시에 쓰면 제스처가 꼬일 수 있어, 역할을 분리하거나 한쪽으로 통일한다.</li>
+            <li><strong>MCP 서버 연결</strong>은 도구 스키마(JSON) 확인 → mcp.json 등록 → Cursor 재시작 순서. <code>uvx</code>로 Python 패키지를 즉시 실행할 수 있다.</li>
+            <li>카드뉴스 디자인에서 <strong>이미지 + 그라데이션 오버레이 + 텍스트</strong> 3레이어 구조가 가독성과 비주얼을 동시에 잡는 핵심 패턴이다.</li>
+            <li>Pexels 같은 무료 스톡 이미지 MCP를 쓰면 <strong>채팅 안에서 이미지 검색·다운로드·적용까지 자동화</strong>할 수 있다.</li>
+            <li>제출물 파일명은 <code>[날짜][이름]영문제목</code> 형식으로 통일하면 정렬·관리가 편하다.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>7. 다음에 하면 좋은 것</h2>
+          <ul class="checklist">
+            <li>카드뉴스를 실제 모바일 기기에서 이미지·오버레이 렌더링 최종 확인</li>
+            <li>Pexels 이미지를 슬라이드 주제에 더 맞는 사진으로 교체 (키워드 조정)</li>
+            <li>인스타 캡션·해시태그를 카드뉴스 하단 또는 별도 md로 정리</li>
+            <li>「위키 확인」으로 로보틱스·1784 관련 사내 wiki 추가 조회</li>
+            <li>다른 MCP 서버(Midjourney, DALL-E 등) 연동으로 AI 이미지 생성 자동화</li>
+          </ul>
+        </section>
+      </div>
+
+      <footer class="report-footer">
+        작성자 문유빈 · 2026년 5월 21일~26일 CURSOR 실습 학습보고서
+      </footer>
+    </article>
+  </div>
+</body>
+</html>
