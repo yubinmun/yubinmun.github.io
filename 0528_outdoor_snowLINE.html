@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>snowLINE — 실외로봇×일본 | 팀 논의용</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --naver-green: #03c75a;
+      --green-dim: rgba(3, 199, 90, 0.12);
+      --black: #000000;
+      --surface: #0d0f12;
+      --surface-2: #14181f;
+      --border: #252a33;
+      --text: #ededed;
+      --text-muted: #8a8f98;
+      --line-green: #06c755;
+      --max-w: 960px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(3, 199, 90, 0.08), transparent),
+        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      nav.toc { display: none; }
+    }
+    nav.toc {
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+      font-size: 12px;
+    }
+    nav.toc a {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.35rem 0;
+      border-left: 2px solid transparent;
+      padding-left: 0.75rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    nav.toc a:hover { color: var(--naver-green); border-color: var(--naver-green); }
+    main { min-width: 0; max-width: var(--max-w); }
+    .hero {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--naver-green);
+      background: var(--green-dim);
+      border: 1px solid rgba(3, 199, 90, 0.35);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .brand-snow { color: #ffffff; font-weight: inherit; }
+    .brand-line { color: var(--naver-green); font-weight: inherit; }
+    th .brand-snow, .slide-tag .brand-snow { color: #ffffff; }
+    .hero-meta {
+      margin-top: 1rem;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .hero-meta strong { color: var(--text); }
+    section {
+      margin-bottom: 2.75rem;
+      scroll-margin-top: 1.5rem;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 1.25rem 0 0.65rem;
+      color: var(--naver-green);
+    }
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 1rem 0 0.5rem;
+    }
+    p { margin-bottom: 0.85rem; }
+    ul { margin: 0.5rem 0 1rem 1.25rem; }
+    li { margin-bottom: 0.35rem; }
+    strong { color: #fff; font-weight: 600; }
+    .lead {
+      font-size: 1.05rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--naver-green);
+      padding: 1.1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1rem;
+    }
+    blockquote {
+      border-left: 3px solid var(--line-green);
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border-radius: 0 6px 6px 0;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .card-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      margin: 1rem 0;
+    }
+    .persona-card h4 { color: var(--text); margin-top: 0; }
+    .persona-card .role { font-size: 12px; color: var(--naver-green); margin-bottom: 0.5rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 1rem 0;
+      background: var(--surface);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th, td {
+      padding: 0.65rem 0.85rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th {
+      background: var(--surface-2);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    .timeline-table td:first-child {
+      font-weight: 700;
+      color: var(--naver-green);
+      white-space: nowrap;
+      width: 3rem;
+    }
+    .tag-line { color: var(--line-green); font-weight: 600; }
+    .tag-nuri { color: var(--naver-green); font-weight: 600; }
+    .ending-seq {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 1rem;
+      margin: 1rem 0;
+      font-size: 14px;
+    }
+    .ending-seq .arrow { color: var(--text-muted); }
+    .reasons { counter-reset: r; list-style: none; margin-left: 0; }
+    .reasons li {
+      counter-increment: r;
+      padding-left: 2rem;
+      position: relative;
+      margin-bottom: 0.6rem;
+    }
+    .reasons li::before {
+      content: counter(r);
+      position: absolute;
+      left: 0;
+      width: 1.4rem;
+      height: 1.4rem;
+      background: var(--green-dim);
+      color: var(--naver-green);
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 0.15rem;
+    }
+    .refs { font-size: 13px; }
+    .refs a { color: var(--naver-green); word-break: break-all; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .summary-table th { width: 28%; }
+
+    /* —— 진입 · 모드 전환 —— */
+    .view-panel { display: none; }
+    .view-panel.is-active { display: block; }
+    #view-report.is-active .layout { display: grid; }
+
+    #gate {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+    }
+    #gate.is-hidden { display: none; }
+    .gate-card {
+      max-width: 520px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 2rem 1.75rem;
+      text-align: center;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    }
+    .gate-card h1 { font-size: 2.5rem; margin-bottom: 0.35rem; }
+    .gate-card .sub { color: var(--text-muted); font-size: 14px; margin-bottom: 2rem; }
+    .gate-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 520px) { .gate-choices { grid-template-columns: 1fr; } }
+    .gate-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.35rem 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .gate-btn:hover {
+      border-color: var(--naver-green);
+      background: var(--green-dim);
+      transform: translateY(-2px);
+    }
+    .gate-btn .icon { font-size: 1.75rem; }
+    .gate-btn strong { font-size: 15px; }
+    .gate-btn span { color: var(--text-muted); font-size: 12px; line-height: 1.4; }
+    .gate-remember {
+      margin-top: 1.25rem;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+
+    .mode-bar {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 900;
+      display: none;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .mode-bar.is-visible { display: flex; }
+    .mode-bar button {
+      font-family: inherit;
+      font-size: 12px;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(13, 15, 18, 0.9);
+      color: var(--text-muted);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+    .mode-bar button:hover { color: var(--text); border-color: var(--naver-green); }
+    .mode-bar button.is-on {
+      color: var(--naver-green);
+      border-color: var(--naver-green);
+      background: var(--green-dim);
+    }
+
+    /* —— PPT 모드 —— */
+    #view-ppt.is-active {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+    .ppt-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3.5rem 2rem 4.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 880px;
+      animation: slideIn 0.35s ease;
+    }
+    .slide.is-current { display: block; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .slide-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--naver-green);
+      margin-bottom: 0.75rem;
+    }
+    .slide h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      border: none;
+      padding: 0;
+      margin-bottom: 1.25rem;
+      line-height: 1.25;
+    }
+    .slide .slide-lead {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .slide .slide-lead strong { color: var(--text); }
+    .slide ul.compact {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .slide ul.compact li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+    }
+    .slide ul.compact li:last-child { border-bottom: none; }
+    .slide .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) { .slide .steps { grid-template-columns: 1fr 1fr; } }
+    .slide .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-size: 13px;
+    }
+    .slide .step b { display: block; color: var(--naver-green); font-size: 11px; margin-bottom: 0.35rem; }
+    .slide table { font-size: 12px; }
+    .slide .big-quote {
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+      font-style: italic;
+      border-left: 3px solid var(--line-green);
+      padding-left: 1rem;
+      margin: 1rem 0;
+      color: var(--text);
+    }
+    .slide .morph {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      margin: 1.5rem 0;
+    }
+    .slide .morph .line { color: var(--line-green); }
+    .slide .morph .nuri { color: var(--naver-green); }
+    .slide .morph .arrow { color: var(--text-muted); margin: 0 0.5rem; }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin: 1rem 0;
+    }
+    @media (max-width: 600px) { .stat-row { grid-template-columns: 1fr; } }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+    }
+    .stat-box .num {
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
+      font-weight: 700;
+      color: var(--naver-green);
+      line-height: 1.2;
+    }
+    .stat-box .lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      line-height: 1.35;
+    }
+    .slide-source {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 0.85rem;
+      line-height: 1.5;
+    }
+    .slide .highlight-li {
+      border-left: 2px solid var(--naver-green);
+      padding-left: 0.65rem;
+      margin: 0.35rem 0;
+      font-size: 14px;
+    }
+    .slide-narrative p {
+      font-size: clamp(0.92rem, 1.8vw, 1.02rem);
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 0.85rem;
+    }
+    .slide-narrative p strong { color: var(--text); font-weight: 500; }
+    .slide-narrative .scene-break {
+      width: 2rem;
+      height: 1px;
+      background: var(--border);
+      margin: 1rem 0;
+    }
+
+    .ppt-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.5rem;
+      background: rgba(0, 0, 0, 0.85);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .ppt-nav button {
+      font-family: inherit;
+      font-size: 13px;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .ppt-nav button:hover:not(:disabled) { border-color: var(--naver-green); color: var(--naver-green); }
+    .ppt-nav button:disabled { opacity: 0.35; cursor: not-allowed; }
+    .ppt-counter { font-size: 13px; color: var(--text-muted); }
+    .ppt-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: var(--naver-green);
+      z-index: 901;
+      transition: width 0.25s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="gate" role="dialog" aria-label="보기 모드 선택">
+    <div class="gate-card">
+      <span class="badge">팀 논의용</span>
+      <h1><span class="brand-snow">snow</span><span class="brand-line">LINE</span></h1>
+      <p class="sub">실외로봇 × 일본 · 아키타 생활도로<br />[05.28] 문유빈</p>
+      <div class="gate-choices">
+        <button type="button" class="gate-btn" data-mode="report">
+          <span class="icon" aria-hidden="true">📄</span>
+          <strong>보고서</strong>
+          <span>전체 내용·목차·표<br />읽기·검색용</span>
+        </button>
+        <button type="button" class="gate-btn" data-mode="ppt">
+          <span class="icon" aria-hidden="true">▶</span>
+          <strong>슬라이드 (PPT)</strong>
+          <span>발표·심사용<br />키 메시지 중심</span>
+        </button>
+      </div>
+      <label class="gate-remember">
+        <input type="checkbox" id="remember-mode" /> 다음부터 이 선택 기억하기
+      </label>
+    </div>
+  </div>
+
+  <div class="mode-bar" id="mode-bar" aria-label="보기 모드">
+    <button type="button" data-switch="report">보고서</button>
+    <button type="button" data-switch="ppt">슬라이드</button>
+    <button type="button" id="btn-home" title="처음 화면">처음</button>
+  </div>
+  <div class="ppt-progress" id="ppt-progress" style="width:0%"></div>
+
+  <div id="view-report" class="view-panel">
+  <div class="layout">
+    <nav class="toc" aria-label="목차">
+      <a href="#oneliner">한 줄</a>
+      <a href="#terms">용어</a>
+      <a href="#s1">1. 문제</a>
+      <a href="#s2">2. 메커니즘</a>
+      <a href="#s3">3. 키트</a>
+      <a href="#s4">4. 거점</a>
+      <a href="#s5">5. 아키타</a>
+      <a href="#s6">6. 대안</a>
+      <a href="#s7">7. 네이버</a>
+      <a href="#s8">8. 광고</a>
+      <a href="#s9">9. 타겟·BM</a>
+      <a href="#s10">10. PoC</a>
+      <a href="#s11">11. 발표</a>
+      <a href="#s12">12. 요약</a>
+      <a href="#s13">13. 시장</a>
+      <a href="#s14">14. 기존 대안</a>
+      <a href="#s15">15. 저항</a>
+      <a href="#s16">16. 사례</a>
+      <a href="#s17">17. 도입</a>
+      <a href="#refs">참고</a>
+    </nav>
+
+    <main>
+      <header class="hero">
+        <span class="badge">팀 논의용</span>
+        <h1><span class="brand-snow">snow</span><span class="brand-line">LINE</span></h1>
+        <p class="hero-meta">
+          <strong>누리(Nuri) × 아키타 시 · B2G 겨울 생활도로 운영</strong><br />
+          NAVER LABS Global CX Campaign<br />
+          캠페인명: snowLINE — 겨울 <strong>생활도로</strong>에 선을 먼저 그리고, <strong>LINE</strong>으로 시민이 확인한다.<br />
+          작성: [05.28] 문유빈
+        </p>
+      </header>
+
+      <section id="oneliner">
+        <h2>한 줄</h2>
+        <p class="lead">
+          누리가 새벽에 <strong>생활도로</strong>(좁은 주거·상점가 연결 보도, 병원·마을 버스 정류장 앞 등)를 순찰해 결빙·적설 위험을 점수화하고, 본부가 <strong>무엇을 먼저 확보할지</strong> 정한 뒤 <strong>권역 거점</strong>에 우선 대응 키트를 미리 두면, 제설 업체가 아침 출근·병원·등하교 전에 <strong>걸을 수 있는 좁은 보행 띠(약 1m)</strong>를 만들고, 시민은 <strong>LINE 앱</strong>에서 우리 집·근처 <strong>생활도로의 보행 띠 확보 여부</strong>를 확인할 수 있는 <strong>지자체용 겨울 도로 운영</strong>이다. 누리는 제설 로봇이 아니라 <strong>판단 + 거점에 키트 배치</strong>를 담당한다.
+        </p>
+      </section>
+
+      <section id="terms">
+        <h2>용어 (팀 내부)</h2>
+        <table>
+          <thead><tr><th>용어</th><th>의미</th></tr></thead>
+          <tbody>
+            <tr><td><strong>생활도로</strong></td><td>간선이 아닌 <strong>주민 일상 이동</strong>이 걸리는 좁은 도로·보도 연결 구간 (상점가 뒤, 구릉 마을길, 병원·정류장 앞, 통학로를 <strong>포함</strong>하되 범위는 그보다 넓음)</td></tr>
+            <tr><td><strong>보행 띠 확보</strong></td><td>생활도로에 <strong>약 1m × 15~40m</strong> 구간을 사람이 걸을 수 있게 만든 상태 (키트 + <strong>현장 인력</strong>)</td></tr>
+            <tr><td><strong>열림</strong> <em>(내부 약어)</em></td><td>= 보행 띠 확보. 대외에는 「보행 띠 확보」「아침 출발 전 보행 가능」</td></tr>
+          </tbody>
+        </table>
+        <blockquote>제설차가 <strong>간선 전체</strong>를 뚫는 것과 혼동하지 않는다. snowLINE의 결과는 <strong>생활도로 우선의 좁은 보행 통로</strong>다.</blockquote>
+      </section>
+
+      <section id="s1">
+        <h2>1. 왜 이 문제인가 (생활도로)</h2>
+        <p><strong>아키타 시</strong>는 이미 제설 인프라가 있다.</p>
+        <ul>
+          <li>제설차 <strong>GPS 추적 지도</strong> · <strong>LINE</strong> 제설·기상 안내 · 대설 <strong>B2G</strong> 체계</li>
+        </ul>
+        <p>그런데 <strong>생활도로</strong>는 여전히 늦게 잡힌다.</p>
+        <ul>
+          <li>넓은 <strong>간선</strong>은 제설차가 먼저 간다.</li>
+          <li><strong>폭 4m 내외·차량과 보행이 겹치는 생활도로</strong>는 제설·제빙 <strong>순서·우선순위</strong>에서 밀린다.</li>
+          <li>폭설 후 <strong>“간선은 됐는데 우리 동네 길은 아직”</strong> 민원·언론·생활 불편으로 이어진다.</li>
+          <li>통학로는 생활도로 네트워크의 <strong>가장 민감한 구간</strong>이지만, 문제의 본체는 <strong>“통학”만이 아니라 고령·병원·마트로 가는 일상 도로”</strong> 전체다.</li>
+        </ul>
+        <p><strong>병목:</strong> 제설차 부족만이 아니라 <strong>“생활도로 중 어디가 위험한지 모르고, 누가 먼저 갈지 정해지지 않는 것”</strong>.</p>
+        <blockquote><strong>컨셉:</strong> 밤에 생활도로 위험을 점수화하고, <strong>아침 일상이 시작되기 전</strong>에 우선 구간에 <strong>보행 띠</strong>를 만들고, 낮에는 기존 제설차가 간선을 처리한다.</blockquote>
+      </section>
+
+      <section id="s2">
+        <h2>2. 무엇을 하는가 (메커니즘)</h2>
+        <h3>① 밤·새벽 — 누리가 읽는다</h3>
+        <ul>
+          <li><strong>생활도로</strong> 네트워크 <strong>자율 순찰</strong> (통학로 포함·단독 타깃 아님)</li>
+          <li>노면·적설·결빙 추정 → 구간별 <strong>위험 점수</strong></li>
+          <li>수령인 없이 데이터·하역 가능한 시간대</li>
+        </ul>
+        <h3>② 새벽 — 본부가 정한다</h3>
+        <ul>
+          <li>점수·인구밀·병원·버스·학교 접근 → <strong>오늘의 우선 3건(생활도로)</strong></li>
+          <li><strong>권역 제설 거점(모델 A, ~90%)</strong> 으로 키트 배송</li>
+          <li><strong>마을 거점 라커(모델 B)</strong> 시범 2~3곳 (영상·인지용)</li>
+        </ul>
+        <h3>③ 아침 — 사람이 보행 띠를 만든다</h3>
+        <ul>
+          <li>위탁 업체·현장 인력이 거점에서 키트 수령 → <strong>약 1m × 15~40m</strong> 확보</li>
+          <li>누리는 살포·제설·밀기 <strong>하지 않음</strong></li>
+        </ul>
+        <h3>④ 확보·시민 확인</h3>
+        <ul>
+          <li>재순찰·현장 완료 체크 → <strong>보행 띠 확보 완료</strong> 상태 반영</li>
+          <li><strong>LINE</strong> — 구독 시민이 <strong>내 생활도로 / 즐겨찾기 구간</strong>의 확보 여부 확인</li>
+          <li>간선은 기존 대량 제설</li>
+        </ul>
+        <h3>정직한 포지셔닝</h3>
+        <table>
+          <thead><tr><th>아님</th><th>맞음</th></tr></thead>
+          <tbody>
+            <tr><td>누리가 눈을 치우는 로봇</td><td>생활도로 <strong>판단 + 거점에 키트 배치</strong></td></tr>
+            <tr><td>통학로만 보는 캠페인</td><td><strong>생활도로 OS</strong> (통학로는 그 안의 우선 블록)</td></tr>
+            <tr><td>호텔·병원 배송 클리셰</td><td><strong>B2G 생활도로</strong></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s3">
+        <h2>3. 우선 대응 키트</h2>
+        <p><strong>약 5~8kg</strong> — 누리가 새벽 <strong>권역 거점</strong>에 하역.</p>
+        <p>접이식 표지·반사판 · 모래·제빙제(소량) · 소형 삽·장갑 · 작업 범위·QR 카드.</p>
+        <p><strong>결과물:</strong> 생활도로 <strong>걸을 수 있는 좁은 보행 통로</strong>. 광고에서 누리 단독 개통 주장 금지.</p>
+      </section>
+
+      <section id="s4">
+        <h2>4. 배송·거점 모델</h2>
+        <table>
+          <thead><tr><th>모델</th><th>역할</th><th>비중</th></tr></thead>
+          <tbody>
+            <tr><td><strong>A. 권역 제설 거점</strong></td><td>새벽 무인 하역 · 아침 업체 수령</td><td><strong>~90%</strong></td></tr>
+            <tr><td><strong>B. 생활도로 거점 라커</strong></td><td>시범·영상</td><td>보조</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s5">
+        <h2>5. 왜 아키타인가</h2>
+        <table>
+          <thead><tr><th>요인</th><th>내용</th></tr></thead>
+          <tbody>
+            <tr><td>시장</td><td><strong>특별豪雪地帯</strong> · 생활도로 민원·제설 예산</td></tr>
+            <tr><td>기존 자산</td><td>제설차 GPS · LINE — <strong>차량 레이어는 있음, 생활도로 레이어 없음</strong></td></tr>
+            <tr><td>갭</td><td>생활도로 <strong>출동 전</strong> 위험·우선순위</td></tr>
+            <tr><td>확장</td><td>동북 <strong>특별대설지 201</strong> 시정촌 · LINE 제설 채널 보급 지역</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s6">
+        <h2>6. 경쟁·대안과의 차이</h2>
+        <table>
+          <thead><tr><th>기존</th><th>한계</th><th>snowLINE</th></tr></thead>
+          <tbody>
+            <tr><td>제설차 GPS</td><td>간선·차량</td><td><strong>생활도로</strong> 우선</td></tr>
+            <tr><td>고정 IoT</td><td>지점 고정</td><td><strong>이동 순찰</strong></td></tr>
+            <tr><td>SRSS·3D 제설</td><td>출동 후</td><td><strong>출동 전</strong> 점수</td></tr>
+            <tr><td>LINE 제설 안내</td><td>일정·차량</td><td><strong>보행 띠 확보 여부</strong></td></tr>
+            <tr><td>대량 제설</td><td>넓은 면</td><td><strong>먼저 좁은 띠</strong></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s7">
+        <h2>7. 네이버 스택 (비즈니스 연결)</h2>
+        <table>
+          <thead><tr><th>구성요소</th><th>역할</th><th>NAVER 가치</th></tr></thead>
+          <tbody>
+            <tr><td><strong>누리 + ARC</strong></td><td>생활도로 순찰·하역</td><td>일본 실외 로봇 <strong>레퍼런스</strong></td></tr>
+            <tr><td><strong>NCP Japan</strong></td><td>점수·API·관제</td><td><strong>클라우드 ARR</strong></td></tr>
+            <tr><td><strong>Maps API</strong></td><td>생활도로·거점·레이어</td><td>지도 <strong>B2G 데이터 레이어</strong></td></tr>
+            <tr><td><strong>Works / LINE WORKS</strong></td><td>업체 티켓·배정</td><td><strong>B2B 협업</strong> 침투</td></tr>
+            <tr><td><strong>LINE Official</strong></td><td>시민 <strong>보행 띠 확보 확인</strong></td><td><strong>MAU·공식계정·지자체 패키지</strong></td></tr>
+            <tr><td><strong>시 GPS 지도</strong></td><td>베이스 (제설차)</td><td>기존 투자 <strong>위에 얹기</strong></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s8">
+        <h2>8. 광고 시나리오 (팀 합의안)</h2>
+        <p><strong>톤:</strong> 주방·청각 → 창밖·LINE → 길거리. <strong>대사 없음.</strong> 관제·누리·기능 설명 <strong>없음</strong> (snowLINE은 <strong>이미 돌아간 뒤</strong>의 아침).</p>
+        <p><strong>주인공:</strong> <strong>픽업 나서는 엄마</strong> + <strong>어린아이</strong></p>
+        <p><strong>메시지:</strong> 눈 많은 날도 <strong>LINE 초록</strong>이면 길은 걸을 수 있다 — 로봇이 연 게 아니라 <strong>도시가 먼저 준비했다</strong>.</p>
+
+        <h3>타임라인 (60~75초)</h3>
+        <table class="timeline-table">
+          <thead><tr><th>순서</th><th>화면</th><th>소리</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>주방.</strong> 엄마가 <strong>요리</strong> 중 — 냄비 <strong>보글보글</strong></td><td><strong>끓는 소리·국물 소리</strong> (BGM 없음, 청각 우선)</td></tr>
+            <tr><td>2</td><td><strong>시계</strong> 확인 — 픽업·등원 <strong>시간</strong> (말 없음)</td><td>시계 <strong>틱</strong> 1~2회</td></tr>
+            <tr><td>3</td><td><strong>싱크대 위 창문</strong> — 바깥 <strong>눈이 많이 쌓임</strong></td><td>바깥 <strong>고요</strong> (바람 아주 약하게)</td></tr>
+            <tr><td>4</td><td>스마트폰 <strong>LINE</strong> — 통학·생활도로 구간 <strong>초록</strong> (<code>보행 가능</code>)</td><td>알림 <strong>짧게 1번</strong> 또는 무음</td></tr>
+            <tr><td>5</td><td><strong>길가.</strong> 눈 내린 <strong>생활도로</strong> 옆, <strong>서서 기다리는 엄마</strong></td><td>거리 <strong>침묵</strong></td></tr>
+            <tr><td>6</td><td><strong>노란 스쿨 버스</strong> — 다가옴 → <strong>어린아이</strong> 하차 (마주침)</td><td><strong>부웅—</strong> 엔진·저속 접근</td></tr>
+            <tr><td>7</td><td><strong>손잡고</strong> 걸음 — 둘 다 <strong>모자</strong>. 천천히 (뛰지 않음)</td><td>발소리·눈 밟는 소리</td></tr>
+            <tr><td>8</td><td><strong>모자</strong>가 프레임 <strong>위로 아웃</strong> — 인물 없음, 하늘·눈만</td><td><strong>웃는 소리</strong> 작게 (숨결·키득 수준) → 이어서 <strong>끊김</strong></td></tr>
+            <tr><td>9</td><td><strong>캐치프레이즈</strong> — <em>Before the snow, <span class="tag-line">LINE</span> remembers.</em> (<span class="tag-line">LINE</span> 강조)</td><td>피아노 <strong>1음</strong> 또는 무음</td></tr>
+            <tr><td>10</td><td>카피 속 <span class="tag-line">LINE</span> → <span class="tag-nuri">NURI</span> 로고·워드가 <strong>자연스럽게 모핑</strong></td><td>무음 또는 모핑 시 <strong>짧은 톤</strong> 1개</td></tr>
+            <tr><td>11</td><td><strong>NAVER LABS</strong> 로고</td><td>무음 · fade out</td></tr>
+          </tbody>
+        </table>
+
+        <h3>카피 · 엔딩</h3>
+        <table>
+          <tbody>
+            <tr><th>영문 (메인)</th><td><em>Before the snow, <strong>LINE</strong> remembers.</em></td></tr>
+            <tr><th>한글 (각주)</th><td><em>눈 오기 전, <strong>LINE</strong>이 기억한다.</em></td></tr>
+          </tbody>
+        </table>
+        <div class="ending-seq">
+          <span>① 카피</span><span class="arrow">→</span>
+          <span><span class="tag-line">LINE</span> → <span class="tag-nuri">NURI</span> 모핑</span><span class="arrow">→</span>
+          <span>③ NAVER LABS</span>
+        </div>
+        <p class="card"><strong>모핑 연출:</strong> 앱 속 LINE 초록(4번 컷)과 <strong>같은 그린</strong>이 카피 LINE에 잠깐 남았다가, 획이 이어지며 <strong>NURI</strong> 워드마크로 변함 — “시민이 본 LINE = 밤에 움직인 NURI”를 <strong>말 없이</strong> 연결.</p>
+
+        <h3>연출 메모</h3>
+        <ul>
+          <li><strong>LINE 초록</strong> = 밤~새벽 snowLINE 이후. 엄마는 <strong>색만</strong> 본다.</li>
+          <li><strong>노란 버스</strong> → <strong>도보 픽업</strong> 구간 = 생활도로·통학로 <strong>보행 띠</strong> (이미 확보된 상태).</li>
+          <li>누리·관제·Works <strong>미등장</strong> — 시민-facing. B2G용 메커니즘 컷은 <strong>메이킹·2차 영상</strong>.</li>
+        </ul>
+        <h3>하지 말 것</h3>
+        <ul>
+          <li>로봇·관제·UI 튜토리얼 · 엄마 내레이션</li>
+          <li>“로봇이 길을 열었다” · 아이 단독 영웅 연출 · 뛰기·구출 코미디</li>
+        </ul>
+        <p><em>(참고) 새벽·관제·고학년 단독 버전 → B2G·기술 2차 영상용.</em></p>
+      </section>
+
+      <section id="s9">
+        <h2>9. 타겟 지역 · 타겟 유저 · 페르소나 · BM</h2>
+        <blockquote>네이버 마케팅·사업 관점: <strong>“겨울에만 도는 B2G SaaS + LINE 시민 레이어 + 누리 실증”</strong> 번들.</blockquote>
+
+        <h3>9.1 타겟 지역 (3단계)</h3>
+        <table>
+          <thead><tr><th>단계</th><th>지역</th><th>선정 이유</th><th>PoC/KPI</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. PoC</strong></td><td><strong>아키타 시</strong></td><td>GPS·LINE 제설 이미 운영 · SRSS와 역할 분리</td><td>생활도로 2~3km · 거점 2~3 · 1겨울</td></tr>
+            <tr><td><strong>2. 확장</strong></td><td>동북 특별豪雪地帯 201</td><td>스택 복제 · 플레이북</td><td>시즌당 3~5시</td></tr>
+            <tr><td><strong>3. TAM</strong></td><td>豪雪地帯 532</td><td>MLIT · 인구 ~15%</td><td>레이어 라이선스</td></tr>
+          </tbody>
+        </table>
+
+        <h3>9.2 타겟 유저 (B2B2G)</h3>
+        <table>
+          <thead><tr><th>세그먼트</th><th>조직</th><th>Jobs-to-be-done</th><th>snowLINE hook</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Decider</strong></td><td>도로시설·除雪 과장</td><td>민원·시장 보고·예산</td><td>생활도로를 <strong>수치로</strong> 설명</td></tr>
+            <tr><td><strong>Buyer</strong></td><td>정보システム·DX</td><td>LINE·GPS와 중복 없는 레이어</td><td>NCP·API·LINE 패키지</td></tr>
+            <tr><td><strong>Operator</strong></td><td>위탁除雪 반장</td><td>오늘 어디부터</td><td>우선 3건 + 키트</td></tr>
+            <tr><td><strong>Influencer</strong></td><td>지역 신문·마을회</td><td>고령·생활도로 안전</td><td>LINE 가시화</td></tr>
+            <tr><td><strong>End user</strong></td><td>65세+ · 맞벌이 부모</td><td>걸을 수 있는지</td><td>LINE <strong>내 구간</strong> 확인</td></tr>
+            <tr><td><strong>NAVER 내부</strong></td><td>LINE Biz · NCP · LABS</td><td>일본 공공 레퍼런스</td><td>겨울 <strong>반복 매출</strong></td></tr>
+          </tbody>
+        </table>
+
+        <h3>9.3 페르소나</h3>
+        <div class="card-grid">
+          <div class="card persona-card">
+            <p class="role">P1 · Decider</p>
+            <h4>다나카 유이치 — 도로시설과 과장</h4>
+            <p>48세 · 폭설 시 <strong>생활도로 민원</strong> 시장 보고. KPI: <strong>7시 전 보행 띠 확보율</strong>. “LINE·GPS <strong>위에</strong> 레이어.”</p>
+          </div>
+          <div class="card persona-card">
+            <p class="role">P2 · Operator</p>
+            <h4>사토 미키 — 제설 업체 반장</h4>
+            <p>55세 · 새벽 4시 출동. “로봇이 일자리 뺏는 게 아니라 <strong>첫 3곳을 정해 준다</strong>.”</p>
+          </div>
+          <div class="card persona-card">
+            <p class="role">P3 · End user</p>
+            <h4>야마다 히로시 — 72세 주민</h4>
+            <p>간선 OK · 골목 NG. LINE 즐겨찾기 <strong>自宅前の生活道路</strong> → 보행 가능. 구간 단위·GPS 추적 없음.</p>
+          </div>
+          <div class="card persona-card">
+            <p class="role">P4 · NAVER</p>
+            <h4>LINE Biz 담당</h4>
+            <p><strong>生活道路ステータス</strong> 모듈 · 시즌 번들 · 타 지자체 복제 판매.</p>
+          </div>
+        </div>
+
+        <h3>9.4 BM · 수익 구조</h3>
+        <table>
+          <thead><tr><th>레이어</th><th>모델</th><th>가격 가설</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Core</strong></td><td>snowLINE 시즌 구독 (12~16주)</td><td>4,000만~1.2억 원/시</td></tr>
+            <tr><td><strong>로봇</strong></td><td>누리 순찰·하역 km</td><td>시즌 포함 또는 별도</td></tr>
+            <tr><td><strong>LINE</strong></td><td>생활도로 스테이터스 모듈</td><td>500만~2,000만 원/시즌</td></tr>
+            <tr><td><strong>Cloud</strong></td><td>NCP · Maps API</td><td>종량 + 최저선</td></tr>
+          </tbody>
+        </table>
+        <p><strong>NAVER가 솔깃한 이유:</strong></p>
+        <ol class="reasons">
+          <li>CAPEX가 아닌 겨울 <strong>반복 구독</strong> + LINE·Cloud 번들 ARR</li>
+          <li>기존 지자체 LINE·지도 위 <strong>레이어 추가</strong></li>
+          <li><strong>생활도로</strong> = 통학로보다 넓은 TAM</li>
+          <li>누리 일본 공공 레퍼런스 + Maps 겨울 데이터</li>
+          <li>SRSS(간선)와 <strong>정면 충돌 없음</strong></li>
+        </ol>
+
+        <h3>9.5 LINE 연동</h3>
+        <table>
+          <thead><tr><th>기능</th><th>설명</th></tr></thead>
+          <tbody>
+            <tr><td>구간 등록</td><td>집 앞·자주 쓰는 생활도로 1~3구간 즐겨찾기</td></tr>
+            <tr><td>상태 표시</td><td>확인 중 → 보행 띠 확보 → (선택) 간선 제설 완료</td></tr>
+            <tr><td>푸시</td><td>기본 끔 · opt-in만</td></tr>
+            <tr><td>정책</td><td><strong>개인 GPS 추적 없음</strong> · 블록 단위</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s10">
+        <h2>10. PoC · 리스크</h2>
+        <p><strong>PoC (1시즌):</strong> 생활도로 2~3km · 거점 2~3 · LINE 모듈 1채널 · 키트+소규모 크루.</p>
+        <p><strong>KPI:</strong> ① 7시 전 보행 띠 확보율 ② 생활도로 민원 ③ LINE 구간 조회 수.</p>
+        <p><strong>리스크:</strong> 폭설 시 띠만으로 부족 → 간선·인력 연계.</p>
+      </section>
+
+      <section id="s11">
+        <h2>11. 발표용 문장</h2>
+        <blockquote><strong>15초:</strong> <strong>snowLINE</strong> — 누리가 밤에 <strong>생활도로</strong> 위험을 읽으면, 아키타는 아침 전에 <strong>보행 띠</strong>를 만들고, 시민은 <strong>LINE</strong>에서 우리 동네 생활도로 <strong>보행 가능 여부</strong>를 확인한다.</blockquote>
+        <p><strong>슬라이드 순서:</strong> 문제 → 시장 → 대안 → 메커니즘 → 타겟·BM → 저항·사례 → 광고·도입 → PoC</p>
+      </section>
+
+      <section id="s12">
+        <h2>12. 한 장 요약</h2>
+        <table class="summary-table">
+          <tbody>
+            <tr><th>문제</th><td><strong>생활도로</strong>가 제설 순서에서 밀림</td></tr>
+            <tr><th>컨셉</th><td>밤 판단 → 아침 <strong>보행 띠</strong> → LINE 확인</td></tr>
+            <tr><th>누리</th><td>순찰 + 거점에 키트 배치</td></tr>
+            <tr><th>LINE</th><td>생활도로 <strong>보행 띠 확보</strong> 시민 확인</td></tr>
+            <tr><th>지역</th><td>아키타 PoC → 동북 201 → 532</td></tr>
+            <tr><th>BM</th><td>시즌 구독 + LINE 모듈 + NCP</td></tr>
+            <tr><th>캠페인</th><td><strong>snowLINE</strong></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s13">
+        <h2>13. 시장 규모·성장성</h2>
+        <table>
+          <thead><tr><th>구분</th><th>범위</th><th>근거</th></tr></thead>
+          <tbody>
+            <tr><td><strong>TAM</strong></td><td>豪雪地帯 532 · 겨울 DX</td><td>인구 ~15% · <a href="https://www.mlit.go.jp/common/001061770.pdf">MLIT</a></td></tr>
+            <tr><td><strong>SAM</strong></td><td>생활도로 + LINE 레이어</td><td>SRSS·GPS와 비경쟁</td></tr>
+            <tr><td><strong>SOM</strong></td><td>아키타 2~3km · 1시즌</td><td>PoC</td></tr>
+          </tbody>
+        </table>
+        <ul>
+          <li>제설비 예산 변동·추경 · 노무·제빙제 상승</li>
+          <li>SRSS DX 2년 <strong>9배</strong> (15거점)</li>
+          <li>“간선 OK, 골목 NG” 갭</li>
+        </ul>
+        <p>매출 가설: 시즌 <strong>4,000만~1.2억 원/시</strong> (PoC 후 확정).</p>
+      </section>
+
+      <section id="s14">
+        <h2>14. 기존 대안</h2>
+        <table>
+          <thead><tr><th>계층</th><th>방식</th><th>한계</th></tr></thead>
+          <tbody>
+            <tr><td>대량 제설</td><td>제설차</td><td>생활도로 순서 밀림</td></tr>
+            <tr><td>GPS</td><td>차량 위치</td><td>출동 전 점수 없음</td></tr>
+            <tr><td>IoT</td><td>고정 지점</td><td>전선 커버 어려움</td></tr>
+            <tr><td>SRSS</td><td>간선 출동 후</td><td>프리디스패치 아님</td></tr>
+            <tr><td>LINE</td><td>제설 일정</td><td>보행 띠 확보 미표시</td></tr>
+            <tr><td>인력</td><td>현장 판단</td><td>우선순위 데이터 없음</td></tr>
+          </tbody>
+        </table>
+        <p>snowLINE = GPS·LINE 위 <strong>생활도로 레이어</strong>.</p>
+      </section>
+
+      <section id="s15">
+        <h2>15. 로봇 도입 저항 3가지·극복</h2>
+        <table>
+          <thead><tr><th>#</th><th>저항</th><th>극복</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>안전·책임</td><td>순찰·하역만 · 시범 구간 · 인력이 띠 완성</td></tr>
+            <tr><td>2</td><td>GPS·LINE만으로 충분</td><td>이동형 생활도로 · LINE 확보 상태</td></tr>
+            <tr><td>3</td><td>예산·업체 반발</td><td>시즌 구독 · 키트=우선 3건</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s16">
+        <h2>16. 해외·일본 유사 사례</h2>
+        <p><em>동일 상용 사례(생활도로+누리+키트+LINE)는 드묾.</em></p>
+        <table>
+          <thead><tr><th>사례</th><th>관계</th></tr></thead>
+          <tbody>
+            <tr><td>Växjö × Klimator</td><td>데이터 기반 우선 제설</td></tr>
+            <tr><td>Ottawa × Four DRobotics</td><td>제설차 안전·자율</td></tr>
+            <tr><td>KCCS×홋카이대</td><td>일본·적설 자율 주행</td></tr>
+            <tr><td>SRSS (아키타 鳥海 등)</td><td>간선 — 공존</td></tr>
+            <tr><td>누리 SusHi Tech 2026</td><td>플랫폼 로봇</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s17">
+        <h2>17. 광고 후 “도입하고 싶다” 시나리오</h2>
+        <p><strong>다나카 유이치</strong> — 아키타 시 도로시설과 과장. 작년 <strong>“간선은 됐는데 ○○町 생활도로”</strong> 민원 다발.</p>
+        <p><strong>광고 직후:</strong> LINE <strong>町内生活道路 · 歩行可能</strong> — <em>“차 말고, 사람 길을 시민에게 보여줄 수 있겠다.”</em></p>
+        <p><strong>다음 날:</strong> PoC 제안 — 생활도로 2km · LINE 모듈 · KPI 민원·7시 전 확보율.</p>
+        <blockquote><strong>트리거:</strong> 기존 GPS·LINE 유지 + 생활도로 보행 약속을 LINE으로 <strong>측정·공개</strong>.</blockquote>
+      </section>
+
+      <section id="refs" class="refs">
+        <h2>참고 링크</h2>
+        <ul>
+          <li><a href="https://akitashi-jyosetsu.ndsoft.jp/">아키타 제설차 GPS</a></li>
+          <li><a href="https://www.mlit.go.jp/common/001061770.pdf">MLIT 豪雪地帯</a></li>
+          <li>누리: NAVER LABS · SusHi Tech Tokyo 2026</li>
+        </ul>
+      </section>
+
+      <footer data-no-brand>
+        팀 논의용 · 대외: 「보행 띠 확보」「생활도로」 중심 · 「열림」 내부 약어만 사용<br />
+        원문: [05.28][문유빈] 실외로봇X일본_snowLINE.md
+      </footer>
+    </main>
+  </div>
+  </div>
+
+  <div id="view-ppt" class="view-panel">
+    <div class="ppt-stage" id="ppt-stage">
+      <article class="slide is-current" data-slide="1">
+        <p class="slide-tag">NAVER LABS · snowLINE</p>
+        <h2><span class="brand-snow">snow</span><span class="brand-line">LINE</span></h2>
+        <p class="slide-lead">누리 × 아키타 시 · <strong>B2G 겨울 생활도로</strong><br />겨울 생활도로에 선을 먼저 그리고, <strong>LINE</strong>으로 시민이 확인한다.</p>
+      </article>
+      <article class="slide" data-slide="2">
+        <p class="slide-tag">한 줄</p>
+        <h2>밤에 읽고, 아침에 걷게</h2>
+        <p class="slide-lead">누리가 새벽 <strong>생활도로</strong> 위험을 점수화 → 본부가 우선순위 결정 → <strong>거점에 키트 배치</strong> → 업체가 <strong>보행 띠</strong> → 시민은 <strong>LINE</strong>에서 확보 여부 확인. 누리는 <strong>판단 + 거점에 키트 배치</strong>.</p>
+      </article>
+      <article class="slide" data-slide="3">
+        <p class="slide-tag">문제 · 2차 리서치</p>
+        <h2>간선은 됐는데, 생활도로는</h2>
+        <div class="stat-row">
+          <div class="stat-box"><div class="num">532</div><div class="lbl">일본 豪雪地帯<br />시정촌 수</div></div>
+          <div class="stat-box"><div class="num">51%</div><div class="lbl">국토 면적 중<br />豪雪地帯 비율</div></div>
+          <div class="stat-box"><div class="num">~15%</div><div class="lbl">전국 인구 중<br />豪雪地帯 거주</div></div>
+        </div>
+        <ul class="compact">
+          <li>제설차 GPS·LINE은 <strong>간선·차량</strong> 중심 — 이미 보급</li>
+          <li><strong>생활도로</strong>는 제설 <strong>순서·우선순위</strong>에서 밀림</li>
+          <li>병목: 출동 <strong>전</strong> 위험·우선 데이터 없음</li>
+        </ul>
+        <p class="slide-source">출처: 국토교통성 豪雪地帯 지정 자료 (市町村数·면적·인구 비율)</p>
+      </article>
+      <article class="slide" data-slide="4">
+        <p class="slide-tag">메커니즘</p>
+        <h2>4단계</h2>
+        <div class="steps">
+          <div class="step"><b>① 밤</b>누리 순찰 · 위험 점수</div>
+          <div class="step"><b>② 새벽</b>우선 3건 · 거점에 키트 배치</div>
+          <div class="step"><b>③ 아침</b>인력 · 보행 띠</div>
+          <div class="step"><b>④ 확인</b>LINE · 재순찰</div>
+        </div>
+      </article>
+      <article class="slide" data-slide="5">
+        <p class="slide-tag">포지셔닝</p>
+        <h2>제설 로봇이 아님</h2>
+        <ul class="compact">
+          <li>❌ 눈 치우기 · 살포 · 미니 제설기</li>
+          <li>✅ 생활도로 <strong>판단 + 거점에 키트 배치</strong></li>
+          <li>✅ <strong>생활도로 OS</strong> (통학로 = 우선 블록)</li>
+        </ul>
+      </article>
+      <article class="slide" data-slide="6">
+        <p class="slide-tag">PoC 지역 · 2차</p>
+        <h2>왜 아키타 시</h2>
+        <div class="stat-row">
+          <div class="stat-box"><div class="num">201</div><div class="lbl">특別豪雪地帯<br />시정촌 (전국)</div></div>
+          <div class="stat-box"><div class="num">GPS</div><div class="lbl">제설차 추적 지도<br />시 운영 중</div></div>
+          <div class="stat-box"><div class="num">SRSS</div><div class="lbl">2025 鳥海ブルーライン<br />간선 DX 도입</div></div>
+        </div>
+        <ul class="compact">
+          <li>갭: <strong>생활도로</strong> 출동 전 점수·LINE 확보 상태 <strong>없음</strong></li>
+          <li>snowLINE = 기존 GPS·LINE <strong>위 레이어</strong> (교체 아님)</li>
+        </ul>
+        <p class="slide-source">출처: 아키타 제설 GPS 공개 서비스 · SRSS 2025 보도(산케이/PR TIMES)</p>
+      </article>
+      <article class="slide" data-slide="7">
+        <p class="slide-tag">시장 성장 · 2차</p>
+        <h2>지금 돈이 움직이는 이유</h2>
+        <div class="stat-row">
+          <div class="stat-box"><div class="num">약 9배</div><div class="lbl">SRSS 출하 대수<br />2023→2025 (2년)</div></div>
+          <div class="stat-box"><div class="num">15</div><div class="lbl">SRSS 가동 거점<br />(2025 기준)</div></div>
+          <div class="stat-box"><div class="num">~50%</div><div class="lbl">市町村 조사<br />除雪費 추가負担 上限 「없음」 응답</div></div>
+        </div>
+        <ul class="compact">
+          <li>제설 <strong>담당 부족·고령화</strong> → DX·우선순위 수요</li>
+          <li>豪雪 시 <strong>추경·예산 변동</strong> — 사전 예측 어려움</li>
+        </ul>
+        <p class="slide-source">출처: Dynamic Map SRSS 보도(2025) · 일본시정연 除雪費·豪雪財政 조사(J-STAGE)</p>
+      </article>
+      <article class="slide" data-slide="8">
+        <p class="slide-tag">TAM · SAM · SOM</p>
+        <h2>시장 규모</h2>
+        <table>
+          <thead><tr><th>구분</th><th>규모</th><th>근거</th></tr></thead>
+          <tbody>
+            <tr><td><strong>TAM</strong></td><td>532 시 · 인구 ~1,963만</td><td>豪雪地帯 전역</td></tr>
+            <tr><td><strong>SAM</strong></td><td>201 특별区 + LINE 보유 시</td><td>생활도로 레이어</td></tr>
+            <tr><td><strong>SOM</strong></td><td>아키타 2~3km · 12~16주</td><td>PoC 1시즌</td></tr>
+          </tbody>
+        </table>
+        <p class="slide-source">출처: MLIT 豪雪地帯 통계 · 팀 PoC 범위(가설)</p>
+      </article>
+      <article class="slide" data-slide="9">
+        <p class="slide-tag">기존 대안 · 갭</p>
+        <h2>snowLINE이 메우는 곳</h2>
+        <table>
+          <thead><tr><th>기존</th><th>한계</th><th>snowLINE</th></tr></thead>
+          <tbody>
+            <tr><td>제설차 GPS</td><td>차량·간선</td><td>생활도로 <strong>출동 전</strong></td></tr>
+            <tr><td>SRSS 3D</td><td>출동 <strong>後</strong></td><td>프리디스패치</td></tr>
+            <tr><td>LINE 제설</td><td>일정·차량</td><td><strong>보행 띠 확보</strong></td></tr>
+            <tr><td>고정 IoT</td><td>지점 고정</td><td><strong>이동 순찰</strong></td></tr>
+          </tbody>
+        </table>
+        <p class="highlight-li">동일 상용 사례(생활도로+누리+키트+LINE) <strong>공개 사례 극소</strong> — 선점 여지</p>
+      </article>
+      <article class="slide" data-slide="10">
+        <p class="slide-tag">네이버 스택 · BM</p>
+        <h2>번들 · 수익 (가설)</h2>
+        <ul class="compact">
+          <li><strong>Nuri + ARC</strong> · <strong>NCP/Maps</strong> · <strong>LINE</strong> · <strong>Works</strong></li>
+          <li>시즌 구독 <strong>4,000만~1.2억 원/시</strong> (Core+LINE, PoC 후 협의)</li>
+          <li>3시즌차 동북 5시 → <strong>ARR 환산</strong> (팀 가설)</li>
+        </ul>
+        <div class="stat-row" style="margin-top:0.75rem">
+          <div class="stat-box"><div class="num">5</div><div class="lbl">NAVER 솔깃한 이유<br />(반복·레이어·TAM·레퍼런스·SRSS 공존)</div></div>
+          <div class="stat-box"><div class="num">LINE</div><div class="lbl">모듈 500만~2,000만<br />원/시즌 (가설)</div></div>
+          <div class="stat-box"><div class="num">3자</div><div class="lbl">MOU: 시·NAVER Japan<br />·LABS</div></div>
+        </div>
+      </article>
+      <article class="slide" data-slide="11">
+        <p class="slide-tag">도입 저항 · 2차</p>
+        <h2>저항 3가지 · 극복</h2>
+        <table>
+          <thead><tr><th>#</th><th>저항</th><th>극복 · 근거</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>안전·책임</td><td>순찰·하역만 · 새벽 시범 · <strong>인력이 띠 완성</strong></td></tr>
+            <tr><td>2</td><td>GPS·LINE 충분론</td><td>이동형 생활도로 · LINE <strong>확보 상태</strong></td></tr>
+            <tr><td>3</td><td>예산·업체</td><td>시즌 구독 · <strong>우선 3건+키트</strong> (일감 보조)</td></tr>
+          </tbody>
+        </table>
+        <p class="slide-source">레퍼런스: SRSS 공공조달·스타트업 실증, Ottawa OVIN 제설 안전 PoC</p>
+      </article>
+      <article class="slide" data-slide="12">
+        <p class="slide-tag">해외·일본 사례</p>
+        <h2>구성요소별 레퍼런스</h2>
+        <ul class="compact">
+          <li><strong>스웨덴 Växjö</strong> × Klimator — IoT·예보 기반 제설, <strong>2겨울</strong> 비용·타깃 제설 개선 (UIA)</li>
+          <li><strong>캐나다 Ottawa</strong> — 제설차 센서·자율 lift PoC (2024)</li>
+          <li><strong>KCCS×홋카이대</strong> — 적설 환경 자율 배송 시험 (NEDO)</li>
+          <li><strong>SRSS</strong> — 간선 15거점 · <strong>아키타 鳥海</strong> — snowLINE과 공존</li>
+        </ul>
+        <p class="highlight-li">완전 동일 스택 상용화 사례 <strong>드묾</strong> → 아키타 PoC 선점</p>
+      </article>
+      <article class="slide" data-slide="13">
+        <p class="slide-tag">광고 시나리오 · 60~75초</p>
+        <h2>아이를 데리러 나가는 아침</h2>
+        <div class="slide-narrative">
+          <p class="slide-lead" style="margin-bottom:1rem;font-size:13px">
+            <strong>대사 없음.</strong> BGM 없음. 누리·관제·기능 설명 없음 — snowLINE은 <strong>이미 지난 밤</strong>에 돌아간 뒤, 우리는 <strong>그 결과가 있는 아침</strong>만 본다.
+          </p>
+          <p>
+            엄마는 픽업 시간에 맞춰 요리를 마무리한다. 냄비만 보글거리고, 시계를 한 번 본다.
+            싱크대 위 창문 너머로 눈이 많이 쌓였지만, 스마트폰 <strong>LINE</strong>에는 우리 동네 생활도로가
+            <strong style="color:var(--line-green)">초록</strong>으로 떠 있다. 설명은 없다. <strong>색만</strong> 본다.
+          </p>
+          <div class="scene-break" aria-hidden="true"></div>
+          <p>
+            길가에서 기다리면 <strong>노란 스쿨 버스</strong>가 천천히 다가온다. 아이가 내려와 엄마와 손을 잡는다.
+            둘 다 모자를 쓴 채, <strong>뛰지 않고</strong> 천천히 걷는다. 발밑의 길은 이미 누군가의 손으로
+            준비되어 있다.
+          </p>
+          <p>
+            모자가 화면 위로 사라지면, 작은 웃음소리만 남고 — 그다음 <strong>캐치프레이즈</strong>로 이어진다.
+            “로봇이 길을 열었다”고 말하지 않는다. <strong>도시가 먼저 준비했다</strong>는 아침이다.
+          </p>
+        </div>
+      </article>
+      <article class="slide" data-slide="14">
+        <p class="slide-tag">카피 · 엔딩</p>
+        <p class="big-quote">Before the snow, <strong style="color:var(--line-green)">LINE</strong> remembers.</p>
+        <p class="morph"><span class="line">LINE</span><span class="arrow">→</span><span class="nuri">NURI</span></p>
+        <p class="slide-lead" style="margin-top:1rem">→ <strong>NAVER LABS</strong></p>
+      </article>
+      <article class="slide" data-slide="15">
+        <p class="slide-tag">PoC · KPI</p>
+        <h2>1겨울 시즌 (아키타)</h2>
+        <div class="stat-row">
+          <div class="stat-box"><div class="num">2~3km</div><div class="lbl">생활도로<br />순찰</div></div>
+          <div class="stat-box"><div class="num">2~3</div><div class="lbl">권역 거점<br />+ LINE 1채널</div></div>
+          <div class="stat-box"><div class="num">7시</div><div class="lbl">이전 보행 띠<br />확보 KPI</div></div>
+        </div>
+        <ul class="compact">
+          <li>목표(가설): 확보율 <strong>80%+</strong> · 생활도로 민원 <strong>30%↓</strong></li>
+          <li>LINE 즐겨찾기 구간 <strong>주간 조회</strong> · 업체 완료 체크 100%</li>
+          <li>키트 5~8kg · 소규모 현장 크루 · 폭설 시 간선 연계</li>
+        </ul>
+        <p class="slide-source">KPI %는 PoC 설계 전 가설 — 실측 후 조정</p>
+      </article>
+      <article class="slide" data-slide="16">
+        <p class="slide-tag">도입 시나리오</p>
+        <h2>광고 후, 시청 과장이 본다</h2>
+        <p class="slide-lead"><strong>다나카</strong> (도로시설과) — 작년 <strong>「간선 OK · 생활도로 NG」</strong> 민원 다발.</p>
+        <ul class="compact">
+          <li>LINE <strong>町内生活道路 · 歩行可能</strong> → “차가 아니라 <strong>사람 길</strong>을 보여준다”</li>
+          <li>익일 PoC 제안: 2km · 모듈 · <strong>민원·7시 전 확보율</strong> 계약</li>
+        </ul>
+      </article>
+      <article class="slide" data-slide="17">
+        <p class="slide-tag">요약</p>
+        <h2>snowLINE</h2>
+        <table class="summary-table">
+          <tbody>
+            <tr><th>문제</th><td>532 시 · 생활도로 순서 밀림</td></tr>
+            <tr><th>누리</th><td>순찰 + 거점에 키트 배치</td></tr>
+            <tr><th>LINE</th><td>보행 띠 확보 확인</td></tr>
+            <tr><th>시장</th><td>TAM 532 → PoC 아키타</td></tr>
+            <tr><th>BM</th><td>시즌 4,000만~1.2억/시 (가설)</td></tr>
+          </tbody>
+        </table>
+        <p class="slide-source">팀 논의용 · 수치 출처: MLIT · SRSS 보도 · 시정연 · PoC KPI는 가설</p>
+      </article>
+    </div>
+    <nav class="ppt-nav" aria-label="슬라이드 이동">
+      <button type="button" id="ppt-prev" disabled>← 이전</button>
+      <span class="ppt-counter" id="ppt-counter">1 / 13</span>
+      <button type="button" id="ppt-next">다음 →</button>
+    </nav>
+  </div>
+
+  <script>
+    (function () {
+      function brandSnowLINE() {
+        var skipTags = { SCRIPT: 1, STYLE: 1, TITLE: 1 };
+        var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        var nodes = [];
+        var n;
+        while ((n = walker.nextNode())) {
+          if (!n.textContent || n.textContent.indexOf("snowLINE") === -1) continue;
+          var p = n.parentElement;
+          if (!p || skipTags[p.tagName]) continue;
+          if (p.closest("[data-no-brand]")) continue;
+          if (p.closest(".brand-snow, .brand-line")) continue;
+          nodes.push(n);
+        }
+        nodes.forEach(function (textNode) {
+          var parts = textNode.textContent.split(/(snowLINE)/g);
+          var frag = document.createDocumentFragment();
+          parts.forEach(function (part) {
+            if (part === "snowLINE") {
+              var snow = document.createElement("span");
+              snow.className = "brand-snow";
+              snow.textContent = "snow";
+              var line = document.createElement("span");
+              line.className = "brand-line";
+              line.textContent = "LINE";
+              frag.appendChild(snow);
+              frag.appendChild(line);
+            } else if (part) {
+              frag.appendChild(document.createTextNode(part));
+            }
+          });
+          textNode.parentNode.replaceChild(frag, textNode);
+        });
+      }
+      brandSnowLINE();
+
+      const STORAGE_KEY = "snowline-view-mode";
+      const gate = document.getElementById("gate");
+      const viewReport = document.getElementById("view-report");
+      const viewPpt = document.getElementById("view-ppt");
+      const modeBar = document.getElementById("mode-bar");
+      const remember = document.getElementById("remember-mode");
+      const slides = Array.from(document.querySelectorAll("#view-ppt .slide"));
+      const progress = document.getElementById("ppt-progress");
+      let currentSlide = 0;
+
+      function setMode(mode, skipStore) {
+        const isReport = mode === "report";
+        viewReport.classList.toggle("is-active", isReport);
+        viewPpt.classList.toggle("is-active", !isReport);
+        gate.classList.add("is-hidden");
+        modeBar.classList.add("is-visible");
+        document.body.style.overflow = isReport ? "" : "hidden";
+        modeBar.querySelectorAll("[data-switch]").forEach(function (btn) {
+          btn.classList.toggle("is-on", btn.dataset.switch === mode);
+        });
+        if (!skipStore && remember.checked) {
+          try { localStorage.setItem(STORAGE_KEY, mode); } catch (e) {}
+        }
+        if (!isReport) updateSlide(0);
+      }
+
+      function showGate() {
+        gate.classList.remove("is-hidden");
+        modeBar.classList.remove("is-visible");
+        viewReport.classList.remove("is-active");
+        viewPpt.classList.remove("is-active");
+        document.body.style.overflow = "";
+        progress.style.width = "0%";
+      }
+
+      function updateSlide(index) {
+        currentSlide = Math.max(0, Math.min(index, slides.length - 1));
+        slides.forEach(function (s, i) {
+          s.classList.toggle("is-current", i === currentSlide);
+        });
+        document.getElementById("ppt-counter").textContent =
+          (currentSlide + 1) + " / " + slides.length;
+        document.getElementById("ppt-prev").disabled = currentSlide === 0;
+        document.getElementById("ppt-next").disabled =
+          currentSlide === slides.length - 1;
+        progress.style.width =
+          ((currentSlide + 1) / slides.length * 100) + "%";
+      }
+
+      document.querySelectorAll(".gate-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setMode(btn.dataset.mode);
+        });
+      });
+
+      modeBar.querySelectorAll("[data-switch]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setMode(btn.dataset.switch, true);
+        });
+      });
+
+      document.getElementById("btn-home").addEventListener("click", showGate);
+
+      document.getElementById("ppt-prev").addEventListener("click", function () {
+        updateSlide(currentSlide - 1);
+      });
+      document.getElementById("ppt-next").addEventListener("click", function () {
+        updateSlide(currentSlide + 1);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (!viewPpt.classList.contains("is-active")) return;
+        if (e.key === "ArrowRight" || e.key === " ") {
+          e.preventDefault();
+          if (currentSlide < slides.length - 1) updateSlide(currentSlide + 1);
+        }
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          if (currentSlide > 0) updateSlide(currentSlide - 1);
+        }
+        if (e.key === "Home") showGate();
+      });
+
+      var saved = null;
+      try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+      if (saved === "report" || saved === "ppt") {
+        remember.checked = true;
+        setMode(saved, true);
+      }
+    })();
+  </script>
+</body>
+</html>
